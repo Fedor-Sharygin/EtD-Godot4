@@ -1,0 +1,9 @@
+# Godot-specific
+*.import/
+*.tscn.res
+*.import.res
+*.shader
+
+# OS-generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,229 @@
+[gd_scene load_steps=22 format=3 uid="uid://bap8b7ehsdvp1"]
+
+[ext_resource type="Texture2D" uid="uid://bact4al488g3r" path="res://Assets/Player/slimeAnimations.png" id="1"]
+[ext_resource type="Script" path="res://Resource/Scripts/Player.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://drbsaubsjwiuy" path="res://Scenes/SlimeParticles.tscn" id="3_bsyag"]
+
+[sub_resource type="Animation" id="10"]
+resource_name = "Jump"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Jump", false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="11"]
+resource_name = "Land"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/AnimatedSprite2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Land", false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="12"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": ["Move"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/AnimatedSprite2D:speed_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7v1y8"]
+_data = {
+"Jump": SubResource("10"),
+"Land": SubResource("11"),
+"RESET": SubResource("12")
+}
+
+[sub_resource type="AtlasTexture" id="1"]
+atlas = ExtResource("1")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="2"]
+atlas = ExtResource("1")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="3"]
+atlas = ExtResource("1")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="4"]
+atlas = ExtResource("1")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="5"]
+atlas = ExtResource("1")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="14"]
+atlas = ExtResource("1")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="15"]
+atlas = ExtResource("1")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="16"]
+atlas = ExtResource("1")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="6"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("1")
+}],
+"loop": true,
+"name": &"Airborn",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("2")
+}, {
+"duration": 1.0,
+"texture": SubResource("3")
+}, {
+"duration": 1.0,
+"texture": SubResource("4")
+}, {
+"duration": 1.0,
+"texture": SubResource("5")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("14")
+}, {
+"duration": 1.0,
+"texture": SubResource("15")
+}, {
+"duration": 1.0,
+"texture": SubResource("16")
+}],
+"loop": true,
+"name": &"Land",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("6")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="8"]
+size = Vector2(96, 96)
+
+[sub_resource type="CircleShape2D" id="9"]
+radius = 48.0
+
+[sub_resource type="CircleShape2D" id="13"]
+radius = 150.0
+
+[sub_resource type="RectangleShape2D" id="28"]
+size = Vector2(100, 100)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("2")
+
+[node name="SlimeTrailTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7v1y8")
+}
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
+position = Vector2(0, -52)
+sprite_frames = SubResource("7")
+animation = &"Move"
+
+[node name="SlimeParticlesLeft" parent="Visuals" instance=ExtResource("3_bsyag")]
+position = Vector2(-52, 0)
+SlimeDirection = Vector2(-2, -1.5)
+
+[node name="SlimeParticlesRight" parent="Visuals" instance=ExtResource("3_bsyag")]
+position = Vector2(52, 0)
+SlimeDirection = Vector2(2, -1.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -48)
+shape = SubResource("8")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -48)
+shape = SubResource("9")
+
+[node name="WorldViewArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldViewArea"]
+position = Vector2(0, -48)
+shape = SubResource("13")
+
+[node name="ButtonArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
+position = Vector2(0, -48)
+shape = SubResource("28")

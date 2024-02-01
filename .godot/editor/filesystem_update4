@@ -1,0 +1,7 @@
+res://default_env.tres
+res://Scenes/TestingLevel.tscn
+res://Resource/FloorTiles_TileSet.tres
+res://Resource/WallTexture_TileSet.tres
+res://Scenes/Player.tscn
+res://Scenes/SlimeTrail.tscn
+res://Scenes/SlimeParticles.tscn

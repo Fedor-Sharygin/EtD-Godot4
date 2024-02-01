@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=3 uid="uid://drbsaubsjwiuy"]
+
+[ext_resource type="Texture2D" uid="uid://ciojf7g01it63" path="res://Assets/Particles/slimeParticle.png" id="1"]
+[ext_resource type="Script" path="res://Resource/Scripts/SlimeParticles.gd" id="2_i6c8d"]
+
+[sub_resource type="CanvasItemMaterial" id="17"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_iomcx"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_filad"]
+curve = SubResource("Curve_iomcx")
+
+[sub_resource type="Gradient" id="21"]
+offsets = PackedFloat32Array(0, 0.220264, 0.784141, 1)
+colors = PackedColorArray(1, 1, 1, 0.105882, 1, 1, 1, 0.835294, 1, 1, 1, 0.666667, 1, 1, 1, 0.121569)
+
+[sub_resource type="GradientTexture2D" id="22"]
+gradient = SubResource("21")
+
+[sub_resource type="Curve" id="23"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.224, 0.877273), 1.28993, 1.28993, 0, 0, Vector2(0.696, 0.659091), -2.04546, -2.04546, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="24"]
+curve = SubResource("23")
+
+[sub_resource type="ParticleProcessMaterial" id="20"]
+direction = Vector3(-2, -1.5, 0)
+spread = 15.0
+gravity = Vector3(0, 98, 0)
+initial_velocity_min = 99.38
+initial_velocity_max = 99.38
+angle_curve = SubResource("CurveTexture_filad")
+scale_curve = SubResource("24")
+color_ramp = SubResource("22")
+
+[node name="SlimeParticles" type="GPUParticles2D"]
+material = SubResource("17")
+position = Vector2(-55, 0)
+amount = 3
+process_material = SubResource("20")
+texture = ExtResource("1")
+lifetime = 0.6
+trail_enabled = true
+script = ExtResource("2_i6c8d")
